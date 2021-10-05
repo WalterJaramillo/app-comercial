@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_152920) do
+ActiveRecord::Schema.define(version: 2020_07_07_024050) do
 
   create_table "categories", force: :cascade do |t|
     t.string "nombre"
@@ -28,17 +28,41 @@ ActiveRecord::Schema.define(version: 2021_10_05_152920) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "image"
+    t.string "imagen"
     t.string "nombre"
-    t.string "direccion"
+    t.string "descripcion"
     t.integer "existencia"
     t.decimal "precio"
-    t.integer "categories_id"
-    t.integer "suppliers_id"
+    t.integer "category_id"
+    t.integer "supplier_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["categories_id"], name: "index_products_on_categories_id"
-    t.index ["suppliers_id"], name: "index_products_on_suppliers_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["supplier_id"], name: "index_products_on_supplier_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "foto"
+    t.string "nombre"
+    t.string "apellido"
+    t.string "direccion"
+    t.string "ciudad"
+    t.string "estado"
+    t.string "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "sale_details", force: :cascade do |t|
+    t.integer "cantidad"
+    t.integer "product_id"
+    t.integer "sale_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_sale_details_on_product_id"
+    t.index ["sale_id"], name: "index_sale_details_on_sale_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -46,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_10_05_152920) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "client_id"
+    t.index ["client_id"], name: "index_sales_on_client_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -67,6 +93,16 @@ ActiveRecord::Schema.define(version: 2021_10_05_152920) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "warehouse_details", force: :cascade do |t|
+    t.integer "cantidad"
+    t.integer "product_id"
+    t.integer "warehouse_record_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_warehouse_details_on_product_id"
+    t.index ["warehouse_record_id"], name: "index_warehouse_details_on_warehouse_record_id"
   end
 
   create_table "warehouse_records", force: :cascade do |t|
