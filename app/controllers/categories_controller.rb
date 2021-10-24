@@ -9,16 +9,16 @@ class CategoriesController < ApplicationController
     @categoria = Category.new
   end
 
-  def edit
+  def edit   #tiene @categoria
   end
 
   def create
-    @categoria = Category.new(category_params)
+    @categoria = Category.new(category_params) #strong parameters | se crea un objeto categoria con los strong parameters
 
     respond_to do |format|
       if @categoria.save
-        format.json { head :no_content }
-        format.js
+        format.json { head :no_content }  #respondemos con json
+        format.js                         # responde js
       else
         format.json { render json: @categoria.errors.full_messages, status: :unprocessable_entity }
         format.js { render :new }
@@ -52,7 +52,7 @@ class CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:category).permit(:nombre, :descripcion)
+      params.require(:category).permit(:nombre, :descripcion) # datos permitidos desde el formulario
     end
 
 end
